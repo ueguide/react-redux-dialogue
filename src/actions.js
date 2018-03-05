@@ -46,9 +46,9 @@ export const replaceUrlQuery = ( newQuery ) => {
       dispatch( replace( newLocation ) )
     } else {
       window.history.replaceState( 
-        Object.assign( {}, window.history.state ),
-        '',
-        `${window.location.pathname}?${newQuery}`
+        Object.assign( {}, window.history.state ), 
+        '', 
+        `${window.location.pathname}?${newQuery}` 
       )
       dispatch( removeFlashAlert() )
     }

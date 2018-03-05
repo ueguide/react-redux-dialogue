@@ -8,38 +8,28 @@ import { selectFlashAlert } from '../selectors'
 class FlashAlert extends React.Component {
   constructor( props ) {
     super( props )
-    this.state = {
-      forceClose: false
-    }
   }
-  componentDidMount() {
-    if ( !this.props.location ) {
 
-    }
-  }
-  componentWillUnmount() {
-    window.onpopstate = null
-  }
   componentWillReceiveProps( nextProps ) {
-    console.log("flash will receive props", this.props, nextProps )
-    /*
-    const { history: { action }, flashAlert, closeAlert } = this.props
-
-    // if flashAlert is present and route is changing, remove current alert
-    if ( flashAlert && action === 'PUSH' ) {
-      closeAlert()
+    // console.log("flash will receive props", this.props, nextProps )
+    if ( this.props.history ) {
+      const { history: { action }, flashAlert, closeAlert } = this.props
+      if ( flashAlert && action === 'PUSH' ) {
+        closeAlert()
+      }
     }
-    */
   }
   
-  shouldComponentUpdate( nextProps ) {
+  shouldComponentUpdate( nextProps, nextState ) {
     // only update when flashAlert prop has changed
-    return JSON.stringify( this.props.flashAlert ) !== JSON.stringify( nextProps.flashAlert )
+    return ( 
+      JSON.stringify( this.props.flashAlert ) !== JSON.stringify( nextProps.flashAlert )
+    )
   }
 
   render() {
     const { id, outerClass, innerClass, flashAlert, closeAlert, canClose } = this.props
-    
+
     if ( !flashAlert ) {
       return null
     }

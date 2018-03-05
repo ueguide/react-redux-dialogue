@@ -1,5 +1,6 @@
 import {
-  SET_FLASH_ALERT
+  SET_FLASH_ALERT,
+  UNSET_FLASH_ALERT
 } from './actionTypes'
 
 const behaviors = {
@@ -7,6 +8,12 @@ const behaviors = {
 
     return Object.assign( {}, state, {
       flashAlert
+    })
+  },
+  [UNSET_FLASH_ALERT]( state ) {
+
+    return Object.assign( {}, state, {
+      flashAlert: null
     })
   }
 }

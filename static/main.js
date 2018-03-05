@@ -42388,52 +42388,40 @@ var FlashAlert = function (_React$Component) {
   function FlashAlert(props) {
     _classCallCheck(this, FlashAlert);
 
-    var _this = _possibleConstructorReturn(this, (FlashAlert.__proto__ || Object.getPrototypeOf(FlashAlert)).call(this, props));
-
-    _this.state = {
-      forceClose: false
-    };
-    return _this;
+    return _possibleConstructorReturn(this, (FlashAlert.__proto__ || Object.getPrototypeOf(FlashAlert)).call(this, props));
   }
 
   _createClass(FlashAlert, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      if (!this.props.location) {}
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      window.onpopstate = null;
-    }
-  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      console.log("flash will receive props", this.props, nextProps);
-      /*
-      const { history: { action }, flashAlert, closeAlert } = this.props
-       // if flashAlert is present and route is changing, remove current alert
-      if ( flashAlert && action === 'PUSH' ) {
-        closeAlert()
+      // console.log("flash will receive props", this.props, nextProps )
+      if (this.props.history) {
+        var _props = this.props,
+            action = _props.history.action,
+            flashAlert = _props.flashAlert,
+            closeAlert = _props.closeAlert;
+
+        if (flashAlert && action === 'PUSH') {
+          closeAlert();
+        }
       }
-      */
     }
   }, {
     key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps) {
+    value: function shouldComponentUpdate(nextProps, nextState) {
       // only update when flashAlert prop has changed
       return JSON.stringify(this.props.flashAlert) !== JSON.stringify(nextProps.flashAlert);
     }
   }, {
     key: 'render',
     value: function render() {
-      var _props = this.props,
-          id = _props.id,
-          outerClass = _props.outerClass,
-          innerClass = _props.innerClass,
-          flashAlert = _props.flashAlert,
-          closeAlert = _props.closeAlert,
-          canClose = _props.canClose;
+      var _props2 = this.props,
+          id = _props2.id,
+          outerClass = _props2.outerClass,
+          innerClass = _props2.innerClass,
+          flashAlert = _props2.flashAlert,
+          closeAlert = _props2.closeAlert,
+          canClose = _props2.canClose;
 
 
       if (!flashAlert) {
@@ -42598,18 +42586,25 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.reducer = undefined;
 
+var _behaviors;
+
 var _actionTypes = require('./actionTypes');
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var behaviors = _defineProperty({}, _actionTypes.SET_FLASH_ALERT, function (state, _ref) {
+var behaviors = (_behaviors = {}, _defineProperty(_behaviors, _actionTypes.SET_FLASH_ALERT, function (state, _ref) {
   var flashAlert = _ref.flashAlert;
 
 
   return Object.assign({}, state, {
     flashAlert: flashAlert
   });
-});
+}), _defineProperty(_behaviors, _actionTypes.UNSET_FLASH_ALERT, function (state) {
+
+  return Object.assign({}, state, {
+    flashAlert: null
+  });
+}), _behaviors);
 
 var reducer = exports.reducer = function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
