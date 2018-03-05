@@ -28,23 +28,29 @@ class FlashAlert extends React.Component {
   }
 
   render() {
-    const { id, outerClass, innerClass, flashAlert, closeAlert, canClose } = this.props
+    const { flashAlert, closeAlert, canClose, render: Component } = this.props
 
     if ( !flashAlert ) {
       return null
     }
 
-    const [ bsStyle, message ] = flashAlert
-
-    return (
-      <div className={outerClass} id={id}>
-        <Alert bsStyle={bsStyle} onDismiss={closeAlert}>
-          <div className={innerClass}>
-            {message}
-          </div>
+    const [ flag, message ] = flashAlert
+    
+    if ( Component ) {
+      const { flashAlert, ...propable } = this.props 
+      
+      return <Component {...this.propable} flag={flag} message={message} />
+    } else {
+      
+      return (
+        <Alert 
+          bsStyle={flag} 
+          onDismiss={canClose ? closeAlert : null}
+        >
+          {message}
         </Alert>
-      </div>
-    )
+      )
+    }
   }
 }
 
@@ -55,8 +61,7 @@ FlashAlert.defaultProps = {
 FlashAlert.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
-  outerClass: PropTypes.string,
-  innerClass: PropTypes.string,
+  render: PropTypes.func,
   flashAlert: PropTypes.arrayOf(
     PropTypes.string.isRequired
   ),
