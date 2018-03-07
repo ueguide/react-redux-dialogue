@@ -4,15 +4,15 @@
   "description": "React+Redux library for dispatching dialogue in app",
   "main": "dist/index.js",
   "scripts": {
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile",
     "test": "jest",
+    "test:watch": "npm test -- --watch",
     "build-js": "browserify browser/main.js -o static/main.js -t [ babelify ]",
     "watch-js": "watchify browser/main.js -o static/main.js -t [ babelify ]"
   },
   "author": "Aaron Kaczmarek <aaronmichaelmusic@gmail.com>",
   "license": "ISC",
-  "options": {
-    "mocha": "--compilers js:babel-register -r mock-local-storage --recursive"
-  },
   "jest": {
     "testEnvironment": "jest-environment-jsdom-global",
     "setupFiles": [
