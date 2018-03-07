@@ -55,3 +55,13 @@ export const selectFlashAlert = createSelector(
     }
   }
 )
+
+/**
+ * Get the message stored in state
+ *
+ * @param  {Object} state
+ * @return {Function}
+ */
+export const selectMessage = state => {
+  return state.dialogue.message
+}

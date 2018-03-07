@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Modal, Button } from 'react-bootstrap'
 import { unsetMessage } from '../actions'
+import { selectMessage } from '../selectors'
 
 export const ModalMessage = ( props ) => {
   const { message, closeModal } = props
@@ -51,7 +52,7 @@ ModalMessage.propTypes = {
 
 const mapStateToProps = ( state ) => {
   return {
-    message: state.dialogue.message
+    message: selectMessage( state )
   }
 }
 

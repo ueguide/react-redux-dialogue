@@ -4,6 +4,12 @@ import { replace } from 'react-router-redux'
 import * as types from './actionTypes'
 import { config } from './config'
 
+/**
+ * Set flash alert to store 
+ * 
+ * @param {Array} flashAlert
+ * @return {Object}
+ */
 export const setFlashAlert = ( flashAlert ) => {
   return {
     type: types.SET_FLASH_ALERT,
@@ -11,12 +17,23 @@ export const setFlashAlert = ( flashAlert ) => {
   }
 }
 
+/**
+ * Remove flash alert from store 
+ * 
+ * @return {Object}
+ */
 export const removeFlashAlert = () => {
   return {
     type: types.UNSET_FLASH_ALERT
   }
 }
 
+/**
+ * Set modal message to store 
+ * 
+ * @param {Object} flashAlert
+ * @return {Object}
+ */
 export const setMessage = ( message ) => {
   return {
     type: types.SET_MESSAGE,
@@ -24,15 +41,28 @@ export const setMessage = ( message ) => {
   }
 }
 
+/**
+ * Remove modal message from store 
+ * 
+ * @return {Object}
+ */
 export const unsetMessage = () => {
   return {
     type: types.UNSET_MESSAGE
   }
 }
 
-export const replaceUrlQuery = ( newQuery ) => {
+/**
+ * Replace url query string params when flash alert param removed
+ * 
+ * @param  {String} newQuery 
+ * @return {void}          
+ */
+const replaceUrlQuery = ( newQuery ) => {
   return ( dispatch, getState ) => {
     const state = getState()
+    
+    // if app uses react-router-redux, state.routing will be set
     if ( state.routing ) {
       // create new, updated location object
       // use immutability helper in case there are nested
@@ -44,12 +74,17 @@ export const replaceUrlQuery = ( newQuery ) => {
       })
       // dispatch replaced location
       dispatch( replace( newLocation ) )
+    // else default to use window location and history 
     } else {
       window.history.replaceState( 
         Object.assign( {}, window.history.state ), 
         '', 
         `${window.location.pathname}?${newQuery}` 
       )
+      // even though query param flash alert isn't stored in state, dispatching 
+      // the unset action will create a new version of state thus triggering 
+      // component updates (which is needed to refetch the flash alert from 
+      // the `selectFlashAlert` selector and its underlying `queryStringFlag`)
       dispatch( removeFlashAlert() )
     }
   }
