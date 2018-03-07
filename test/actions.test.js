@@ -40,4 +40,32 @@ describe('actions', () => {
     expect(replaceState.mock.calls.length).toBe(1)
     expect(store.getActions()).toEqual(expect.arrayContaining(expected))
   })
+  
+  it('should handle unsetFlashAlert when flashAlert in routing.location', () => {
+    store = configureMockStore( [ thunk ] )({
+      dialogue: { flashAlert: null },
+      routing: {
+        location: {
+          pathname: '/',
+          search: '?url_flash=true',
+          hash: ''
+        }
+      }
+    })
+    expected = [ 
+      { type: '@@router/CALL_HISTORY_METHOD',
+        payload: { 
+          method: 'replace', 
+          args: [{
+            "hash": "",
+            "pathname": "/",
+            "search": "?",
+          }]
+        }
+      } 
+    ]
+    store.dispatch(unsetFlashAlert())
+    expect(store.getActions()).toEqual(expect.arrayContaining(expected))
+  })
+  
 })

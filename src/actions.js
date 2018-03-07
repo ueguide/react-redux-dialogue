@@ -4,19 +4,6 @@ import { replace } from 'react-router-redux'
 import * as types from './actionTypes'
 import { config } from './config'
 
-export const setMessage = ( message ) => {
-  return {
-    type: types.SET_MESSAGE,
-    message: message
-  }
-}
-
-export const unsetMessage = () => {
-  return {
-    type: types.UNSET_MESSAGE
-  }
-}
-
 export const setFlashAlert = ( flashAlert ) => {
   return {
     type: types.SET_FLASH_ALERT,
@@ -30,6 +17,19 @@ export const removeFlashAlert = () => {
   }
 }
 
+export const setMessage = ( message ) => {
+  return {
+    type: types.SET_MESSAGE,
+    message: message
+  }
+}
+
+export const unsetMessage = () => {
+  return {
+    type: types.UNSET_MESSAGE
+  }
+}
+
 export const replaceUrlQuery = ( newQuery ) => {
   return ( dispatch, getState ) => {
     const state = getState()
@@ -37,7 +37,7 @@ export const replaceUrlQuery = ( newQuery ) => {
       // create new, updated location object
       // use immutability helper in case there are nested
       // objects in location.state
-      const newLocation = update( location, {
+      const newLocation = update( state.routing.location, {
         search: {
           $set: `?${newQuery}`
         }
@@ -64,7 +64,7 @@ export const replaceUrlQuery = ( newQuery ) => {
 export const unsetFlashAlert = () => {
   return ( dispatch, getState ) => {
     const state = getState()
-    const { dialogue: { flashAlert } } = getState()
+    const { dialogue: { flashAlert } } = state
     const location = state.routing ? state.routing.location : window.location
     const { search } = location
     const query = qs.parse( search.substr( 1 ) )

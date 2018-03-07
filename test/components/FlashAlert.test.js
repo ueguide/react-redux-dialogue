@@ -5,13 +5,17 @@ import { FlashAlert } from '../../src/components/FlashAlert'
 describe('FlashAlert component', () => {
   
   let wrapper
-  const closeAlert = jest.fn()
+  let closeAlert
   const flashAlert = [
     'warning', 'Test Flash Alert'
   ]
   
   beforeEach( () => {
-    //wrapper = shallow(<FlashAlert closeAlert={closeAlert} flashAlert={flashAlert} />)
+    closeAlert = jest.fn()
+  })
+  
+  afterEach( () => {
+    closeAlert.mockClear()
   })
   
   it('should render Alert with flashAlert', () => {
@@ -64,6 +68,29 @@ describe('FlashAlert component', () => {
     expect(wrapper.find(Alert)).toHaveLength(1)
     wrapper.setProps({flashAlert: null})
     expect(wrapper.find(Alert)).toHaveLength(0)
+  })
+  
+  it('should closeAlert when navigating away', () => {
+    wrapper = shallow(
+      <FlashAlert 
+        closeAlert={closeAlert} 
+        flashAlert={flashAlert} 
+        history={{action: 'POP'}}
+      />
+    )
+    // changing history should trigger componentWillReceiveProps and 
+    // consequently call closeAlert
+    wrapper.setProps({history: {
+      action: 'PUSH'
+    }})
+    expect(closeAlert.mock.calls.length).toBe(1)
+  })
+  
+  it('can closeAlert', () => {
+    // use enzyme's mount() to get deeper nodes
+    wrapper = mount(<FlashAlert closeAlert={closeAlert} flashAlert={flashAlert} />)
+    wrapper.find('button').simulate('click')
+    expect(closeAlert.mock.calls.length).toBe(1)
   })
   
 })

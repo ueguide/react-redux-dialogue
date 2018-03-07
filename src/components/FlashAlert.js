@@ -11,9 +11,8 @@ export class FlashAlert extends React.Component {
   }
 
   componentWillReceiveProps( nextProps ) {
-    // console.log("flash will receive props", this.props, nextProps )
     if ( this.props.history ) {
-      const { history: { action }, flashAlert, closeAlert } = this.props
+      const { history: { action }, flashAlert, closeAlert } = nextProps
       if ( flashAlert && action === 'PUSH' ) {
         closeAlert()
       }
