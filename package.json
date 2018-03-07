@@ -4,7 +4,7 @@
   "description": "React+Redux library for dispatching dialogue in app",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha $npm_package_options_mocha",
+    "test": "jest",
     "build-js": "browserify browser/main.js -o static/main.js -t [ babelify ]",
     "watch-js": "watchify browser/main.js -o static/main.js -t [ babelify ]"
   },
@@ -12,6 +12,12 @@
   "license": "ISC",
   "options": {
     "mocha": "--compilers js:babel-register -r mock-local-storage --recursive"
+  },
+  "jest": {
+    "testEnvironment": "jest-environment-jsdom-global",
+    "setupFiles": [
+      "./test/jestsetup.js"
+    ]
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -21,12 +27,18 @@
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.18.0",
     "babelify": "^7.3.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "expect": "^1.20.2",
     "history": "^4.7.2",
     "install": "^0.10.4",
-    "mocha": "^3.2.0",
+    "jest": "^22.4.2",
+    "jest-environment-jsdom": "^22.4.1",
+    "jest-environment-jsdom-global": "^1.0.3",
     "npm": "^5.7.1",
     "react-router-redux": "^5.0.0-alpha.9",
+    "redux-mock-store": "^1.5.1",
+    "redux-thunk": "^2.2.0",
     "watchify": "^3.10.0"
   },
   "dependencies": {

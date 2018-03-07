@@ -5,7 +5,7 @@ import { Alert } from 'react-bootstrap'
 import { unsetFlashAlert } from '../actions'
 import { selectFlashAlert } from '../selectors'
 
-class FlashAlert extends React.Component {
+export class FlashAlert extends React.Component {
   constructor( props ) {
     super( props )
   }
@@ -55,7 +55,7 @@ class FlashAlert extends React.Component {
 }
 
 FlashAlert.defaultProps = {
-  canClose: false
+  canClose: true
 }
 
 FlashAlert.propTypes = {

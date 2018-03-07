@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import FlashAlert from './FlashAlert'
 
-const RoutedFlashAlert = ( props ) => {
+export const RoutedFlashAlert = ( props ) => {
   return <FlashAlert {...props} />
 }
 
